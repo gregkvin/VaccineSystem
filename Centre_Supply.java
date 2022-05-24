@@ -1,0 +1,864 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package oodj_assignment;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * 
+ */
+public class Centre_Supply extends javax.swing.JFrame {
+
+    public Centre_Supply(String user1) throws IOException {
+        initComponents();
+        loadtable();
+        setResizable(false);
+        jMenu1.setText(user1);
+        loadVaccine();
+        clear();
+        venue1.setVisible(true);
+        searchqty.setVisible(false);
+        searchvac.setVisible(false);
+        searchCtr.setVisible(true);
+        attribute.setVisible(false);
+        qty1.setVisible(false);
+    }
+    
+    private void clear(){
+        idid.setText(null); idid.setEditable(false);
+        venue.setText(null); venue.setEditable(false);
+        qty.setValue(0);
+        attribute1.setEnabled(false);
+        modify.setEnabled(false); remove.setEnabled(false);
+    }
+    
+    private void loadtable() throws IOException{
+        Centre ctr = new Centre();
+        modify m = new modify();
+        String path = "centre.txt";
+        int line = m.readLineNumber(path), n=0;
+        DefaultTableModel model = (DefaultTableModel)(centreeee.getModel());
+        model.setRowCount(0);
+        try {
+            String[] id = ctr.ReadCtrID();
+            String[] centree = ctr.ReadCentre(); 
+            String [] vaccineee = ctr.ReadVaccine();
+            String[] qtyctr = ctr.readQtyCtr();
+            while(n < line){
+                model.addRow(new Object[]{centree[n], vaccineee[n], qtyctr[n]});
+                n=n+1;
+            }
+            centreeee.setModel(model);
+        } catch (Exception e){
+            
+        }
+    }
+    
+    private void searchCtr() throws IOException{
+        Centre c = new Centre();
+        String path = "login.txt";
+        int id = c.searchCtr(venue1.getText());
+        if(id ==  -1){
+            JOptionPane.showMessageDialog(null, "Venue not found!");
+        } else {
+        DefaultTableModel model = (DefaultTableModel)(centreeee.getModel());
+        model.setRowCount(0);
+        String[] ctrid = c.ReadCtrID();
+        String [] centree = c.ReadCentre();
+        String [] vaccineee = c.ReadVaccine();
+        String[] qtyctr = c.readQtyCtr();
+        
+        model.addRow(new Object[]{centree[id], vaccineee[id], qtyctr[id]});
+        centreeee.setModel(model);
+    }
+    }
+    
+    
+    private void searchVac() throws IOException {
+    Centre c = new Centre();
+    ArrayList<Integer> id = c.searchVaccine(attribute.getSelectedItem().toString());
+    int n = 0;
+    DefaultTableModel model = (DefaultTableModel)(centreeee.getModel());
+    model.setRowCount(0);
+    String[] ctrid = c.ReadCtrID();
+    String[] centree = c.ReadCentre();
+    String [] vaccineee = c.ReadVaccine();
+    String[] qtyctr = c.readQtyCtr();
+    
+    while(n < id.size()){
+        model.addRow(new Object[]{centree[id.get(n)], vaccineee[id.get(n)], qtyctr[id.get(n)]});
+        n = n + 1;
+    }
+    centreeee.setModel(model);
+    
+}
+        
+    
+    private void searchQty() throws IOException {
+        Centre c = new Centre();
+        VaccineSupply v = new VaccineSupply();
+        ArrayList<Integer> id = v.searchVaccineQty((Integer)(qty1.getValue()));
+        int n = 0;
+        DefaultTableModel model = (DefaultTableModel)(centreeee.getModel());
+        model.setRowCount(0);
+        String[] ctrid = c.ReadCtrID();
+        String[] centree = c.ReadCentre();
+        String [] vaccineee = c.ReadVaccine();
+        String[] qtyctr = c.readQtyCtr();
+    
+        while(n < id.size()){
+            model.addRow(new Object[]{centree[id.get(n)], vaccineee[id.get(n)], qtyctr[id.get(n)]});
+            n = n + 1;
+        }
+        centreeee.setModel(model);
+    }
+    
+    private void logout() throws IOException{
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now(); 
+        FileWrite fh = new FileWrite();
+        String[] input = {jMenu1.getText(), "User logout successful.", dtf.format(now)};
+        fh.LoggingActivity(input);
+    }
+
+    private void loadVaccine() throws IOException{
+        int n=0;
+        modify m = new modify();
+        Vaccine v = new Vaccine();
+        String vaccine [] = v.readVac("vaccine.txt");
+        attribute.setModel(new javax.swing.DefaultComboBoxModel(vaccine));
+        attribute1.setModel(new javax.swing.DefaultComboBoxModel(vaccine));
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jButton4 = new javax.swing.JButton();
+        jMenu2 = new javax.swing.JMenu();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        centreeee = new javax.swing.JTable();
+        jButton7 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        searchCtr = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
+        attribute = new javax.swing.JComboBox<>();
+        remove = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        venue = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        qty = new javax.swing.JSpinner();
+        modify = new javax.swing.JButton();
+        attribute1 = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        idid = new javax.swing.JTextField();
+        attribute2 = new javax.swing.JComboBox<>();
+        venue1 = new javax.swing.JTextField();
+        qty1 = new javax.swing.JSpinner();
+        searchvac = new javax.swing.JButton();
+        searchqty = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+
+        jButton4.setText("jButton4");
+
+        jMenu2.setText("jMenu2");
+
+        jMenu3.setText("File");
+        jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("Edit");
+        jMenuBar2.add(jMenu4);
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 204));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 33, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        centreeee.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        centreeee.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Venue", "Vaccine", "Qty"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        centreeee.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                centreeeeMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(centreeee);
+
+        jButton7.setBackground(new java.awt.Color(255, 255, 255));
+        jButton7.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(0, 102, 204));
+        jButton7.setText("Back");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Poppins", 2, 10)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 102));
+        jLabel2.setText("• COVID-19 VACCINATION REGISTRATION SYSTEM");
+
+        searchCtr.setBackground(new java.awt.Color(255, 255, 255));
+        searchCtr.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        searchCtr.setForeground(new java.awt.Color(0, 102, 204));
+        searchCtr.setText("Search");
+        searchCtr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchCtrActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 102, 204));
+        jLabel6.setText("Venue");
+
+        jButton9.setBackground(new java.awt.Color(255, 255, 255));
+        jButton9.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(0, 102, 204));
+        jButton9.setText("Refresh");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        attribute.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        attribute.setForeground(new java.awt.Color(0, 102, 204));
+        attribute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                attributeActionPerformed(evt);
+            }
+        });
+
+        remove.setBackground(new java.awt.Color(255, 255, 255));
+        remove.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        remove.setForeground(new java.awt.Color(0, 102, 204));
+        remove.setText("Remove");
+        remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 102, 204));
+        jLabel7.setText("Search by ");
+
+        venue.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        venue.setForeground(new java.awt.Color(0, 102, 204));
+
+        jLabel8.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 102, 204));
+        jLabel8.setText("Vaccine");
+
+        jLabel9.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 102, 204));
+        jLabel9.setText("Qty");
+
+        qty.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+
+        modify.setBackground(new java.awt.Color(255, 255, 255));
+        modify.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        modify.setForeground(new java.awt.Color(0, 102, 204));
+        modify.setText("Modify");
+        modify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyActionPerformed(evt);
+            }
+        });
+
+        attribute1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        attribute1.setForeground(new java.awt.Color(0, 102, 204));
+        attribute1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                attribute1ActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 102, 204));
+        jLabel10.setText("ID");
+
+        idid.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        idid.setForeground(new java.awt.Color(0, 102, 204));
+
+        attribute2.setFont(new java.awt.Font("Poppins", 0, 10)); // NOI18N
+        attribute2.setForeground(new java.awt.Color(0, 102, 204));
+        attribute2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Venue", "Vaccine", "Qty Greater Than" }));
+        attribute2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                attribute2ActionPerformed(evt);
+            }
+        });
+
+        venue1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        venue1.setForeground(new java.awt.Color(0, 102, 204));
+
+        qty1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+
+        searchvac.setBackground(new java.awt.Color(255, 255, 255));
+        searchvac.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        searchvac.setForeground(new java.awt.Color(0, 102, 204));
+        searchvac.setText("Search");
+        searchvac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchvacActionPerformed(evt);
+            }
+        });
+
+        searchqty.setBackground(new java.awt.Color(255, 255, 255));
+        searchqty.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        searchqty.setForeground(new java.awt.Color(0, 102, 204));
+        searchqty.setText("Search");
+        searchqty.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchqtyActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(attribute1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(modify, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(remove, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(idid, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(venue, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(attribute2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3)
+                                .addComponent(venue1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(attribute, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(qty1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchCtr, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchvac, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchqty, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(attribute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(attribute2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(venue1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(qty1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchCtr)
+                    .addComponent(searchvac)
+                    .addComponent(searchqty))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(venue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(idid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(remove)
+                        .addComponent(jButton9)
+                        .addComponent(jButton7)
+                        .addComponent(modify))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel9)
+                        .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(attribute1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jLabel3.setText("jLabel3");
+
+        jLabel4.setText("jLabel4");
+
+        jMenuBar1.setForeground(new java.awt.Color(0, 102, 204));
+        jMenuBar1.setFont(new java.awt.Font("Poppins", 0, 10)); // NOI18N
+
+        jMenu1.setBackground(new java.awt.Color(0, 102, 204));
+        jMenu1.setForeground(new java.awt.Color(255, 255, 255));
+        jMenu1.setText("Personnel");
+        jMenu1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jMenuItem2.setForeground(new java.awt.Color(0, 102, 204));
+        jMenuItem2.setText("Activity Log");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jMenuItem1.setForeground(new java.awt.Color(0, 102, 204));
+        jMenuItem1.setText("Log Out");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu5.setText("Covid-19 Vaccine Supply");
+        jMenu5.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jMenuItem3.setForeground(new java.awt.Color(0, 102, 204));
+        jMenuItem3.setText("New Venue");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem3);
+
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem4.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jMenuItem4.setForeground(new java.awt.Color(0, 102, 204));
+        jMenuItem4.setText("Vaccine Inventory");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu5);
+
+        setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        int yesno = JOptionPane.YES_NO_OPTION;
+        JOptionPane.showConfirmDialog (null, "Are you sure want to log out?","WARNING", yesno);
+        if(yesno == JOptionPane.YES_OPTION) {
+            try {
+                dispose();
+                logout();
+                new Login().setVisible(true);
+                if(yesno == JOptionPane.NO_OPTION) {
+                    remove(yesno);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+     try {
+            // TODO add your handling code here:
+            dispose();
+            new Logging_Activity(jMenu1.getText()).setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(User_Records.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        String user1=jMenu1.getText();
+        new Personnel_Menu(user1).setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        try {
+            // TODO add your handling code here:
+            new Add_Venue().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        try {
+            new Centre_Supply1().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        try {
+            loadtable();
+        } catch (IOException ex) {
+            Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void centreeeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_centreeeeMouseClicked
+        try {
+            Centre c = new Centre();
+            int row = centreeee.rowAtPoint(evt.getPoint());
+            String [] id = c.ReadCtrID(); idid.setText(id[row]);
+            String ctr = centreeee.getValueAt(row,0).toString(); venue.setText(ctr);
+            String vac = centreeee.getValueAt(row,1).toString(); attribute1.setSelectedItem(vac);
+            int qtyy = Integer.parseInt(centreeee.getValueAt(row,2).toString()); 
+            qty.setValue(qtyy);
+            modify.setEnabled(true); remove.setEnabled(true); attribute1.setEnabled(true);
+            idid.setEditable(true); venue.setEditable(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_centreeeeMouseClicked
+
+    private void attributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attributeActionPerformed
+ 
+    }//GEN-LAST:event_attributeActionPerformed
+
+    private void searchCtrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCtrActionPerformed
+        try {
+            // TODO add your handling code here:
+            searchCtr();
+        } catch (IOException ex) {
+            Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_searchCtrActionPerformed
+
+    private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
+        // TODO add your handling code here:
+        if(venue.getText().equals(null)){
+            JOptionPane.showMessageDialog(null, "Nothing to be deleted");
+        } else {
+            try {
+                String input = idid.getText() + "-" + venue.getText() + "-" +
+                        attribute1.getSelectedItem().toString() + "-" + qty.getValue();
+                String [] input2 = {idid.getText() ,  venue.getText() , 
+                    attribute1.getSelectedItem().toString(), String.valueOf(qty.getValue())};
+                String path = "centre.txt";
+                int id = Integer.parseInt(idid.getText())-1;
+                
+                remove r = new remove();
+                VaccineSupply vc = new VaccineSupply();
+                r.removeRecord(input, path, id);
+                vc.addVaccine(input2, id);
+                clear();
+                JOptionPane.showMessageDialog(null, "Record deleted successfully!");
+            } catch (IOException ex) {
+                Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }//GEN-LAST:event_removeActionPerformed
+
+    private void modifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyActionPerformed
+        if(venue.getText().equals(null)){
+            JOptionPane.showMessageDialog(null, "Nothing to be deleted");
+        } else {
+            try {
+                Login l = new Login();
+                Centre c = new Centre();
+                modify fh = new modify();
+                VaccineSupply v = new VaccineSupply();
+                int length = fh.readLineNumber("centre.txt");
+                //int id = length-1;
+                
+                String [] ctrID = c.ReadCtrID();
+                String [] vac = c.ReadVaccine();
+                String [] qtyvac = c.readQtyCtr();
+                int id = l.userIndex(ctrID, idid.getText());
+                System.out.println(id);
+                
+                String input = idid.getText() + "-" +  venue.getText() + "-" +
+                    attribute1.getSelectedItem().toString()+"-" + String.valueOf(qty.getValue());
+                
+                String [] input2 = {idid.getText() ,  venue.getText() ,
+                    vac[id], qtyvac[id]};
+                
+                 String [] input3 = {idid.getText() ,  venue.getText() ,
+                    attribute1.getSelectedItem().toString(), String.valueOf(qty.getValue())};
+                 
+                String path = "centre.txt";
+                
+              
+                c.modifyCentre(id, input);
+                v.addVaccine(input2, id);
+                v.updateVaccine(input3, id);
+                clear();
+                JOptionPane.showMessageDialog(null, "Record modified successfully!");
+                
+            } catch (IOException ex) {
+                Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+              
+        }
+        
+    }//GEN-LAST:event_modifyActionPerformed
+
+    private void attribute1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attribute1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_attribute1ActionPerformed
+
+    private void attribute2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attribute2ActionPerformed
+        // TODO add your handling code here:
+        if(attribute2.getSelectedItem()=="Venue"){
+            venue1.setVisible(true);
+            searchqty.setVisible(false);
+            searchvac.setVisible(false);
+            searchCtr.setVisible(true);
+            attribute.setVisible(false);
+            qty1.setVisible(false);
+        } else if (attribute2.getSelectedItem()=="Vaccine") {
+            venue1.setVisible(false);
+            searchvac.setVisible(true);
+            attribute.setVisible(true);
+            searchCtr.setVisible(false);
+            qty1.setVisible(false);
+            searchqty.setVisible(false);
+        } else if (attribute2.getSelectedItem()=="Qty Greater Than") {
+            venue1.setVisible(false);
+            searchvac.setVisible(false);
+            attribute.setVisible(false);
+            searchCtr.setVisible(false);
+            qty1.setVisible(true);
+            searchqty.setVisible(true);
+        }
+    }//GEN-LAST:event_attribute2ActionPerformed
+
+    private void searchvacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchvacActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            searchVac();
+        } catch (IOException ex) {
+            Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_searchvacActionPerformed
+
+    private void searchqtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchqtyActionPerformed
+        try {
+            // TODO add your handling code here:
+            searchQty();
+        } catch (IOException ex) {
+            Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_searchqtyActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Centre_Supply.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Centre_Supply.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Centre_Supply.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Centre_Supply.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                String user1 = null;
+                try {
+                    new Centre_Supply(user1).setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Centre_Supply.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> attribute;
+    private javax.swing.JComboBox<String> attribute1;
+    private javax.swing.JComboBox<String> attribute2;
+    private javax.swing.JTable centreeee;
+    private javax.swing.JTextField idid;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton modify;
+    private javax.swing.JSpinner qty;
+    private javax.swing.JSpinner qty1;
+    private javax.swing.JButton remove;
+    private javax.swing.JButton searchCtr;
+    private javax.swing.JButton searchqty;
+    private javax.swing.JButton searchvac;
+    private javax.swing.JTextField venue;
+    private javax.swing.JTextField venue1;
+    // End of variables declaration//GEN-END:variables
+}
